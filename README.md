@@ -17,4 +17,11 @@ composer require slim/slim
 
 composer require twig/twig
 
-composer require slim/views
+composer require slim/views 
+
+### named routes
+```php
+$app->get('/contact', function () use($app) {
+   $app->render('contact.twig');
+})->name('contact');
+```
