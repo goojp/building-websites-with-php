@@ -1,0 +1,16 @@
+{
+    "name": "root/audiobook",
+    "type": "project",
+    "authors": [
+        {
+            "name": "goojp",
+            "email": "goojp@outlook.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "~1.13",
+        "slim/slim": "2.6",
+        "twig/twig": "^1.31",
+        "slim/views": "^0.1.3"
+    }
+}
