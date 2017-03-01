@@ -34,7 +34,16 @@ $app->get('/contact', function () use($app) {
 })->name('contact');
 
 $app->post('/contact', function () use($app) {
-   var_dump($app->request->post());
+   $name = $app->request->post('name');
+   $email = $app->request->post('email');
+   $msg =  $app->request->post('msg');
+   
+   
+   if(!empty($name) && !empty($email) && !empty($msg)){
+       echo "hello";
+   } else {
+       $app->redirect('/contact');
+   }
 });
 
 
