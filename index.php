@@ -40,7 +40,9 @@ $app->post('/contact', function () use($app) {
    
    
    if(!empty($name) && !empty($email) && !empty($msg)){
-       echo "hello";
+        $name = filter_var($name, FILTER_SANITIZE_STRING);
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+        $msg = filter_var($msg, FILTER_SANITIZE_STRING);
    } else {
        $app->redirect('/contact');
    }
