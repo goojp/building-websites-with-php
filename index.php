@@ -40,12 +40,32 @@ $app->post('/contact', function () use($app) {
    
    
    if(!empty($name) && !empty($email) && !empty($msg)){
-        $name = filter_var($name, FILTER_SANITIZE_STRING);
-        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-        $msg = filter_var($msg, FILTER_SANITIZE_STRING);
+        $cleanName = filter_var($name, FILTER_SANITIZE_STRING);
+        $cleanEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
+        $cleanMsg = filter_var($msg, FILTER_SANITIZE_STRING);
    } else {
        $app->redirect('/contact');
    }
+   
+   $transport = \Swift_SendmailTransport::newInstance('/usr/sbin/sendmail -bs');
+   $mailer = \Swift_Mailer::newInstance($transport);
+   
+   $message = \Swift_Message::newInstance();
+   $message->setSubject('Email from our website');
+   $message->setFrom(
+       [$cleanEmail => $cleanName]
+       );
+   $message->setTo(['tree@localhost']);
+   $message->setBody($cleanMsg);
+   
+   $result = $mailer->send($message);
+   
+   if($result > 0){
+       $app->redirect('/');
+   } else {
+       $app->redirect('/contact');
+   }
+   
 });
 
 
